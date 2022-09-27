@@ -1,4 +1,5 @@
 "use strict";
+// if(!process.env.NODE_ENV) process.env.NODE_ENV = "development";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -15,11 +16,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-if (!process.env.NODE_ENV)
-    process.env.NODE_ENV = "development";
 var Config = /** @class */ (function () {
     function Config() {
-        this.isDevelopment = process.env.NODE_ENV === "development";
+        // public isDevelopment = process.env.NODE_ENV === "development";
         this.isProduction = process.env.NODE_ENV === "production";
         this.port = 0;
         this.connectionString = "";
@@ -28,18 +27,12 @@ var Config = /** @class */ (function () {
     }
     return Config;
 }());
-var DevelopmentConfig = /** @class */ (function (_super) {
-    __extends(DevelopmentConfig, _super);
-    function DevelopmentConfig() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.port = 3001;
-        _this.connectionString = "mongodb://127.0.0.1:27017/Supermarket";
-        _this.imagesPath = "./src/1-assets/images/";
-        _this.siteAddress = "http://localhost:4200";
-        return _this;
-    }
-    return DevelopmentConfig;
-}(Config));
+// class DevelopmentConfig extends Config {
+//     public port = 3001;
+//     public connectionString = "mongodb://127.0.0.1:27017/Supermarket";
+//     public imagesPath = "./src/1-assets/images/";
+//     public siteAddress = "http://localhost:4200";
+// }
 var ProductionConfig = /** @class */ (function (_super) {
     __extends(ProductionConfig, _super);
     function ProductionConfig() {
@@ -52,5 +45,5 @@ var ProductionConfig = /** @class */ (function (_super) {
     }
     return ProductionConfig;
 }(Config));
-var config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
+var config = new ProductionConfig();
 exports.default = config;
