@@ -1,17 +1,12 @@
-import mongoose from "mongoose";
-import isIsraeliIdValid from 'israeli-id-validator';
-export interface IUserModel extends mongoose.Document {
-    firstName: string;
-    lastName: string;
-    email: string;
-    citizenId: number;
-    password: string;
-    city: string;
-    street: string;
-    role: string;
-}
-
-export const UserSchema = new mongoose.Schema<IUserModel>({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserModel = exports.UserSchema = void 0;
+var mongoose_1 = __importDefault(require("mongoose"));
+var israeli_id_validator_1 = __importDefault(require("israeli-id-validator"));
+exports.UserSchema = new mongoose_1.default.Schema({
     firstName: {
         type: String,
         required: [true, "Missing first name"],
@@ -42,14 +37,13 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
         required: [true, "Missing citizen id"],
         trim: true,
         unique: true,
-        validate: [isIsraeliIdValid, "Invalid citizen id"],
+        validate: [israeli_id_validator_1.default, "Invalid citizen id"],
     },
     password: {
         type: String,
         required: [true, "Missing password"],
         minlength: [8, "Password must be at least 8 characters long"],
         maxlength: [128, "Password must be 128 characters or less"]
-
     },
     city: {
         type: String,
@@ -71,9 +65,4 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
 }, {
     versionKey: false,
 });
-
-export const UserModel = mongoose.model<IUserModel>(
-    "UserModel",
-    UserSchema,
-    "users"
-);
+exports.UserModel = mongoose_1.default.model("UserModel", exports.UserSchema, "users");

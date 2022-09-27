@@ -1,26 +1,19 @@
-import mongoose from "mongoose";
-import { CartModel } from "./cart-model";
-import { UserModel } from "./user-model";
-
-
-export interface IOrderModel extends mongoose.Document {
-    userId: mongoose.Schema.Types.ObjectId;
-    cartId: mongoose.Schema.Types.ObjectId;
-    finalPrice: number;
-    deliveryCity: string;
-    deliveryStreet: string;
-    deliveryDate: string;
-    orderDate: string;
-    fourLastDigits: number;
-}
-
-export const OrderSchema = new mongoose.Schema<IOrderModel>({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OrderModel = exports.OrderSchema = void 0;
+var mongoose_1 = __importDefault(require("mongoose"));
+var cart_model_1 = require("./cart-model");
+var user_model_1 = require("./user-model");
+exports.OrderSchema = new mongoose_1.default.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         required: [true, "Missing user _id"]
     },
     cartId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         required: [true, "Missing cart _id"],
         unique: true
     },
@@ -60,29 +53,21 @@ export const OrderSchema = new mongoose.Schema<IOrderModel>({
         maxlength: [4, "Last 4 digits of payment card are required"],
         trim: true
     }
-
 }, {
     versionKey: false,
     toJSON: { virtuals: true },
     id: false
 });
-
-OrderSchema.virtual("user", {
-    ref: UserModel,
+exports.OrderSchema.virtual("user", {
+    ref: user_model_1.UserModel,
     localField: "userId",
     foreignField: "_id",
     justOne: true
 });
-
-OrderSchema.virtual("cart", {
-    ref: CartModel,
+exports.OrderSchema.virtual("cart", {
+    ref: cart_model_1.CartModel,
     localField: "cartId",
     foreignField: "_id",
     justOne: true
 });
-
-export const OrderModel = mongoose.model<IOrderModel>(
-    "OrderModel",
-    OrderSchema,
-    "orders"
-);
+exports.OrderModel = mongoose_1.default.model("OrderModel", exports.OrderSchema, "orders");

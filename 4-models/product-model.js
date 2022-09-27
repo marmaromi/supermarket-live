@@ -1,17 +1,12 @@
-import mongoose from "mongoose";
-import { UploadedFile } from "express-fileupload";
-import { CategoryModel } from "./category-model";
-
-export interface IProductModel extends mongoose.Document {
-    productName: string;
-    categoryId: mongoose.Schema.Types.ObjectId;
-    productPrice: number;
-    imageName: string;
-    image: UploadedFile;
-    priceParameter: string;
-}
-
-export const ProductSchema = new mongoose.Schema<IProductModel>({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductModel = exports.ProductSchema = void 0;
+var mongoose_1 = __importDefault(require("mongoose"));
+var category_model_1 = require("./category-model");
+exports.ProductSchema = new mongoose_1.default.Schema({
     productName: {
         type: String,
         required: [true, "Missing product name"],
@@ -21,7 +16,7 @@ export const ProductSchema = new mongoose.Schema<IProductModel>({
         unique: true
     },
     categoryId: {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose_1.default.Schema.Types.ObjectId
     },
     productPrice: {
         type: Number,
@@ -33,8 +28,8 @@ export const ProductSchema = new mongoose.Schema<IProductModel>({
         type: String
     },
     image: {
-        // type: Buffer, // **************************** probably won't work ***********************************
-        // required: [true, "Missing product image"]
+    // type: Buffer, // **************************** probably won't work ***********************************
+    // required: [true, "Missing product image"]
     },
     priceParameter: {
         type: String,
@@ -49,16 +44,10 @@ export const ProductSchema = new mongoose.Schema<IProductModel>({
     toJSON: { virtuals: true },
     id: false
 });
-
-ProductSchema.virtual("category", {
-    ref: CategoryModel,
+exports.ProductSchema.virtual("category", {
+    ref: category_model_1.CategoryModel,
     localField: "categoryId",
     foreignField: "_id",
     justOne: true
 });
-
-export const ProductModel = mongoose.model<IProductModel>(
-    "ProductModel",
-    ProductSchema,
-    "products"
-);
+exports.ProductModel = mongoose_1.default.model("ProductModel", exports.ProductSchema, "products");
