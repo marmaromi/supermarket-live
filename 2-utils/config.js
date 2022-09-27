@@ -1,5 +1,4 @@
 "use strict";
-// if(!process.env.NODE_ENV) process.env.NODE_ENV = "development";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -16,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+process.env.NODE_ENV = "production";
 var Config = /** @class */ (function () {
     function Config() {
         // public isDevelopment = process.env.NODE_ENV === "development";
